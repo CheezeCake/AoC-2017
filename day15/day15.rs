@@ -2,30 +2,24 @@ use std::io;
 use std::io::BufRead;
 use std::io::BufReader;
 
-fn count_matches(
-    initial_a: u64,
-    a_divisor: u64,
-    initial_b: u64,
-    b_divisor: u64,
-    pairs: usize,
-) -> usize {
-    let mut a = initial_a;
-    let mut b = initial_b;
+fn generate(x: u64, factor: u64, divisor: u64) -> u64 {
+    let mut x = x;
+    loop {
+        x = (x * factor) % 2147483647;
+        if x % divisor == 0 {
+            return x;
+        }
+    }
+}
+
+fn count_matches(a: u64, a_divisor: u64, b: u64, b_divisor: u64, pairs: usize) -> usize {
+    let mut a = a;
+    let mut b = b;
     let mut cnt = 0;
 
     for _i in 0..pairs {
-        loop {
-            a = (a * 16807) % 2147483647;
-            if a % a_divisor == 0 {
-                break;
-            }
-        }
-        loop {
-            b = (b * 48271) % 2147483647;
-            if b % b_divisor == 0 {
-                break;
-            }
-        }
+        a = generate(a, 16807, a_divisor);
+        b = generate(b, 48271, b_divisor);
         if a & 0xffff == b & 0xffff {
             cnt += 1;
         }
