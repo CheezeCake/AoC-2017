@@ -21,8 +21,8 @@ fn main() {
 
         let next = buffer[pos].next;
         buffer.push(Node { value: n, next });
-        buffer[pos].next = buffer.len() - 1;
-        pos = buffer.len() - 1;
+        buffer[pos].next = n;
+        pos = n;
     }
 
     let next = buffer[pos].next;
