@@ -9,7 +9,7 @@ struct Bridge {
     length: u32,
 }
 
-fn strongest_bridge(
+fn build_bridges(
     port: u32,
     strength: u32,
     length: u32,
@@ -21,7 +21,7 @@ fn strongest_bridge(
     for (i, c) in components.iter().enumerate() {
         if (c.0 == port || c.1 == port) && !used.contains(&i) {
             used.insert(i);
-            bridges.append(&mut strongest_bridge(
+            bridges.append(&mut build_bridges(
                 if c.0 == port { c.1 } else { c.0 },
                 strength + c.0 + c.1,
                 length + 1,
@@ -52,7 +52,7 @@ fn main() {
         })
         .collect();
 
-    let bridges = strongest_bridge(0, 0, 0, &components, &mut HashSet::new());
+    let bridges = build_bridges(0, 0, 0, &components, &mut HashSet::new());
 
     println!(
         "part 1: {}",
