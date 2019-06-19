@@ -58,19 +58,19 @@ impl CPU {
 
     fn exec(&mut self, instr: &Instruction) {
         let op1 = &instr.op1;
-        let op2 = instr.op2.clone();
+        let op2 = instr.op2.as_ref();
 
         match instr.opcode.as_str() {
             "set" => {
-                let op2 = self.imm_or_reg(&op2.unwrap());
+                let op2 = self.imm_or_reg(op2.unwrap());
                 self.set_reg(op1, op2);
             }
-            "sub" => self.sub(op1, &op2.unwrap()),
+            "sub" => self.sub(op1, op2.unwrap()),
             "mul" => {
-                self.mul(op1, &op2.unwrap());
+                self.mul(op1, op2.unwrap());
                 self.mul_count += 1;
             }
-            "jnz" => self.jnz(op1, &op2.unwrap()),
+            "jnz" => self.jnz(op1, op2.unwrap()),
             _ => panic!("invalid instruction"),
         };
 

@@ -68,17 +68,17 @@ impl CPU {
 
     fn exec(&mut self, instr: &Instruction) -> bool {
         let op1 = &instr.op1;
-        let op2 = instr.op2.clone();
+        let op2 = instr.op2.as_ref();
 
         match instr.opcode.as_str() {
             "set" => {
-                let op2 = self.imm_or_reg(&op2.unwrap());
+                let op2 = self.imm_or_reg(op2.unwrap());
                 self.set_reg(op1, op2);
             }
-            "add" => self.add(op1, &op2.unwrap()),
-            "mul" => self.mul(op1, &op2.unwrap()),
-            "mod" => self.modulo(op1, &op2.unwrap()),
-            "jgz" => self.jgz(op1, &op2.unwrap()),
+            "add" => self.add(op1, op2.unwrap()),
+            "mul" => self.mul(op1, op2.unwrap()),
+            "mod" => self.modulo(op1, op2.unwrap()),
+            "jgz" => self.jgz(op1, op2.unwrap()),
             _ => return false,
         };
 
